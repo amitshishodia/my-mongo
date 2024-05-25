@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mongo
   namespace: default
@@ -7,8 +7,9 @@ metadata:
     app: mongo
     environment: production
     tier: backend
-    version: "1.0.2"
+    version: "1.0.3"
 spec:
+  serviceName: "mongo-headless"
   replicas: 1
   selector:
     matchLabels:
@@ -48,13 +49,12 @@ spec:
         - name: mongo-init-script
           mountPath: /docker-entrypoint-initdb.d/mongo-init.js
           subPath: mongo-init.js
-      volumes:
-      - name: mongo-storage
-        persistentVolumeClaim:
-          claimName: mongo-pvc
-      - name: mongo-init-script
-        configMap:
-          name: mongo-config
-          items:
-          - key: mongo-init.js
-            path: mongo-init.js
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 2Gi
+      storageClassName: standard
