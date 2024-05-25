@@ -6,7 +6,7 @@ metadata:
     app: mongo
     environment: production
     tier: backend
-    version: "1.0.0"
+    version: "1.0.1"
 spec:
   replicas: 1
   selector:

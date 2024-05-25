@@ -7,3 +7,11 @@ data:
   DB_HOST: mongo-service
   DB_PORT: "27017"
   DB_NAME: my-mongo-pod
+  mongo-init.js: |
+    db.createUser({
+      user: "admin",
+      pwd: "12345",
+      roles: [
+        { role: "root", db: "admin" }
+      ]
+    });
