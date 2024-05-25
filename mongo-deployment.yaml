@@ -2,7 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo
-  version: v1
+  namespace: database
+  labels:
+    app: mongo
+    environment: production
+    tier: backend
+    version: "1.0.0"
 spec:
   replicas: 1
   selector:
