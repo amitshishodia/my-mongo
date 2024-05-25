@@ -1,17 +1,12 @@
-# configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mongo-config
 data:
-  DB_HOST: mongo-service
-  DB_PORT: "27017"
-  DB_NAME: my-mongo-pod
+  DB_NAME: mydatabase
   mongo-init.js: |
     db.createUser({
       user: "admin",
       pwd: "12345",
-      roles: [
-        { role: "root", db: "admin" }
-      ]
+      roles: [{ role: "root", db: "admin" }]
     });

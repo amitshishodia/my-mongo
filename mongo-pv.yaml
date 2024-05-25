@@ -4,9 +4,10 @@ metadata:
   name: mongo-pv
 spec:
   capacity:
-    storage: 2Gi
+    storage: 2Gi  # Adjust the size as needed
   accessModes:
     - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
   gcePersistentDisk:
-    pdName: mongo-disk
+    pdName: your-persistent-disk-name  # Replace with your actual disk name
     fsType: ext4

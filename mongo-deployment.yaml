@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo
+  namespace: default
   labels:
     app: mongo
     environment: production
@@ -16,41 +17,44 @@ spec:
     metadata:
       labels:
         app: mongo
+        environment: production
+        tier: backend
+        version: "1.0.3"
     spec:
       containers:
-        - name: mongo
-          image: mongo:latest
-          ports:
-            - containerPort: 27017
-          env:
-            - name: MONGO_INITDB_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: mongo-config
-                  key: DB_NAME
-            - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: mongo-secret
-                  key: username
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mongo-secret
-                  key: password
-          volumeMounts:
-            - name: mongo-storage
-              mountPath: /data/db              
-            - name: mongo-init-script
-              mountPath: /docker-entrypoint-initdb.d/mongo-init.js
+      - name: mongo
+        image: mongo:latest
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: DB_NAME
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: password
+        volumeMounts:
+        - name: mongo-storage
+          mountPath: /data/db
+        - name: mongo-init-script
+          mountPath: /docker-entrypoint-initdb.d/mongo-init.js
           subPath: mongo-init.js
       volumes:
-        - name: mongo-storage
-          persistentVolumeClaim:
-            claimName: mongo-pvc
-        - name: mongo-init-script
-          configMap:
-            name: mongo-config
-            items:
-            - key: mongo-init.js
-              path: mongo-init.js
+      - name: mongo-storage
+        persistentVolumeClaim:
+          claimName: mongo-pvc
+      - name: mongo-init-script
+        configMap:
+          name: mongo-config
+          items:
+          - key: mongo-init.js
+            path: mongo-init.js
