@@ -9,5 +9,5 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   gcePersistentDisk:
-    pdName: your-persistent-disk-name  # Replace with your actual disk name
+    pdName: mongo-disk  # Replace with your actual disk name
     fsType: ext4
