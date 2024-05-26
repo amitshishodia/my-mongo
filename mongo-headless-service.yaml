@@ -3,10 +3,12 @@ kind: Service
 metadata:
   name: mongo-headless
   namespace: default
+  labels:
+    app: mongo
 spec:
+  ports:
+  - port: 27017
+    name: mongo
   clusterIP: None
   selector:
     app: mongo
-  ports:
-  - port: 27017
-    targetPort: 27017
