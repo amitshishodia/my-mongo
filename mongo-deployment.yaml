@@ -7,7 +7,7 @@ metadata:
     app: mongo
     environment: production
     tier: backend
-    version: "1.0.3"
+    version: "1.0.4"
 spec:
   serviceName: "mongo-headless"
   replicas: 1
