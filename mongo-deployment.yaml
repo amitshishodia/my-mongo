@@ -49,12 +49,20 @@ spec:
         - name: mongo-init-script
           mountPath: /docker-entrypoint-initdb.d/mongo-init.js
           subPath: mongo-init.js
-  volumeClaimTemplates:
-  - metadata:
-      name: mongo-storage
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 2Gi
-      storageClassName: standard
+volumeClaimTemplates:
+- metadata:
+    name: mongo-storage
+  spec:
+    accessModes: [ "ReadWriteOnce" ]
+    resources:
+      requests:
+        storage: 2Gi
+    storageClassName: standard
+- metadata:
+    name: mongo-init-script
+  spec:
+    accessModes: [ "ReadWriteOnce" ]
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: standard
