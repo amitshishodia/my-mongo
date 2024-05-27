@@ -33,22 +33,9 @@ spec:
             configMapKeyRef:
               name: mongo-config
               key: DB_NAME
-        - name: MONGO_INITDB_ROOT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mongo-secret
-              key: username
-        - name: MONGO_INITDB_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mongo-secret
-              key: password
         volumeMounts:
         - name: mongo-storage
           mountPath: /data/db
-        - name: mongo-init-script
-          mountPath: /docker-entrypoint-initdb.d/mongo-init.js
-          subPath: mongo-init.js
   volumeClaimTemplates:
   - metadata:
       name: mongo-storage
@@ -57,12 +44,4 @@ spec:
       resources:
         requests:
           storage: 2Gi
-      storageClassName: standard
-  - metadata:
-      name: mongo-init-script
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 1Gi
       storageClassName: standard
