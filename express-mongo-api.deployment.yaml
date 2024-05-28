@@ -19,7 +19,10 @@ spec:
         - containerPort: 3000
         env:
         - name: MONGO_URL
-          value: "mongodb://mongo-0.mongo-headless.default.svc.cluster.local:27017/eventsdb"
+          valueFrom:
+            configMapKeyRef:
+              name: evms-api-config
+              key: DB_SERVER_NAME
 ---
 apiVersion: v1
 kind: Service
