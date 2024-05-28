@@ -4,6 +4,4 @@ metadata:
   name: evms-api-config
   namespace: default
 data:
-  IMAGE_NAME: gcr.io/peerless-list-423401-k1/express-mongo-api:latest
   DB_SERVER_NAME: mongodb://mongo-0.mongo-headless.default.svc.cluster.local:27017/eventsdb
-  CONTAINER_PORT:3000
