@@ -4,4 +4,4 @@ metadata:
   name: mongo-config
   namespace: default
 data:
-  DB_NAME: mydatabase
+  DB_NAME: eventsdb
