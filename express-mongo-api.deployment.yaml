@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: express-mongo-api
+  namespace: default
 spec:
   replicas: 3
   selector:
@@ -17,19 +18,19 @@ spec:
         image: gcr.io/peerless-list-423401-k1/express-mongo-api:latest
         ports:
         - containerPort: 3000
-      resources:
-        requests:
-          cpu: "100m"
-          memory: "200Mi"
-        limits:
-          cpu: "500m"
-          memory: "500Mi"
         env:
         - name: MONGO_URL
           valueFrom:
             configMapKeyRef:
               name: evms-api-config
               key: DB_SERVER_NAME
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "200Mi"
+          limits:
+            cpu: "500m"
+            memory: "500Mi"
 ---
 apiVersion: v1
 kind: Service
